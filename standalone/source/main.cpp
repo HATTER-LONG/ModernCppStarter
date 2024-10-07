@@ -3,51 +3,52 @@
 
 #include <cxxopts.hpp>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include <string>
 #include <unordered_map>
 
 auto main(int argc, char** argv) -> int {
-  const std::unordered_map<std::string, greeter::LanguageCode> languages{
-      {"en", greeter::LanguageCode::EN},
-      {"de", greeter::LanguageCode::DE},
-      {"es", greeter::LanguageCode::ES},
-      {"fr", greeter::LanguageCode::FR},
-  };
+    const std::unordered_map<std::string, Greeter::LanguageCode> languages{
+        {"en", Greeter::LanguageCode::EN},
+        {"de", Greeter::LanguageCode::DE},
+        {"es", Greeter::LanguageCode::ES},
+        {"fr", Greeter::LanguageCode::FR},
+    };
 
-  cxxopts::Options options(*argv, "A program to welcome the world!");
+    cxxopts::Options options(*argv, "A program to welcome the world!");
 
-  std::string language;
-  std::string name;
+    std::string language;
+    std::string name;
 
-  // clang-format off
+    // clang-format off
   options.add_options()
     ("h,help", "Show help")
     ("v,version", "Print the current version number")
     ("n,name", "Name to greet", cxxopts::value(name)->default_value("World"))
     ("l,lang", "Language code to use", cxxopts::value(language)->default_value("en"))
   ;
-  // clang-format on
+    // clang-format on
 
-  auto result = options.parse(argc, argv);
+    auto result = options.parse(argc, argv);
 
-  if (result["help"].as<bool>()) {
-    std::cout << options.help() << std::endl;
+    if(result["help"].as<bool>()) {
+        std::cout << options.help() << std::endl;
+        return 0;
+    }
+
+    if(result["version"].as<bool>()) {
+        spdlog::info("Greeter, version {}", GREETER_VERSION);
+        return 0;
+    }
+
+    auto lang_it = languages.find(language);
+    if(lang_it == languages.end()) {
+        spdlog::error("unknown language code: {}", language);
+        return 1;
+    }
+
+    Greeter::CGreeter const greeter(name);
+    spdlog::info("greeter message: {}", greeter.greet(lang_it->second));
+
     return 0;
-  }
-
-  if (result["version"].as<bool>()) {
-    std::cout << "Greeter, version " << GREETER_VERSION << std::endl;
-    return 0;
-  }
-
-  auto langIt = languages.find(language);
-  if (langIt == languages.end()) {
-    std::cerr << "unknown language code: " << language << std::endl;
-    return 1;
-  }
-
-  greeter::Greeter greeter(name);
-  std::cout << greeter.greet(langIt->second) << std::endl;
-
-  return 0;
 }
