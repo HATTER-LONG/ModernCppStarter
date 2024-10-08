@@ -38,6 +38,7 @@ if(NOT TEST_INSTALLED_VERSION)
 endif()
 
 # ---- Add GreeterTests ----
+enable_testing()
 list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 
 # print CMAKE_MODULE_PATH

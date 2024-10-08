@@ -7,7 +7,7 @@ alias galone="cmake -S standalone -B build/standalone"
 alias balone="cmake --build build/standalone"
 alias alone="galone && balone"
 
-alias gtest="cmake -S test -B build/test"
+alias gtest="cmake -S test -B build/test -DENABLE_TEST_COVERAGE=1"
 alias btest="cmake --build build/test"
 alias rtest="CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test"
 
