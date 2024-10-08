@@ -6,3 +6,4 @@
 .cache
 coverage.xml
 cover
+compile_commands.json
