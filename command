@@ -10,6 +10,8 @@ alias alone="galone && balone"
 alias gtest="cmake -S test -B build/test -DENABLE_TEST_COVERAGE=1"
 alias btest="cmake --build build/test"
 alias rtest="CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test"
+alias gcovr_xml="gcovr -r . --xml -o coverage.xml"
+alias gcovr_html="rm -rf ./cover/*;gcovr -e '/.*/build/' -r . --html --html-details -o ./cover/coverage.html"
 
 alias install_format_dep="python3 -m venv .venv && source .venv/bin/activate && pip install cmake_format clang-format pyyaml"
 alias gen_format="cmake -S test -B build/test"
