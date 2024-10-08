@@ -21,13 +21,10 @@ else()
   CPMAddPackage(NAME Greeter SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 endif()
 
-CPMFindPackage(NAME Catch2)
-message(STATUS "Catch2 source directory: ${Catch2_SOURCE_DIR}")
-
 # ---- Create binary ----
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} Catch2::Catch2WithMain Greeter::Greeter)
+target_link_libraries(${PROJECT_NAME} Catch2::Catch2WithMain Greeter::Greeter spdlog::spdlog)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 
 # enable compiler warnings
