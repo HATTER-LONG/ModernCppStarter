@@ -1,5 +1,4 @@
-#include <greeter/greeter.h>
-#include <greeter/version.h>
+#include <greeter/net/greeter.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -37,7 +36,7 @@ auto main(int argc, char** argv) -> int {
     }
 
     if(result["version"].as<bool>()) {
-        spdlog::info("Greeter, version {}", GREETER_VERSION);
+        spdlog::info("Greeter, version 1.0");
         return 0;
     }
 
