@@ -30,6 +30,17 @@ This template is the result of learnings from many previous projects and should 
 
 ## Usage
 
+### vscode config
+
+```json
+{
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.environment": {
+        "CPM_SOURCE_CACHE": "${workspaceFolder}/cpm_modules"
+    }
+}
+```
+
 ### Adjust the template to your needs
 
 - Use this repo [as a template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
@@ -44,7 +55,7 @@ This template is the result of learnings from many previous projects and should 
 Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories. 
+To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
 During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
 
 ### Build and run the standalone target

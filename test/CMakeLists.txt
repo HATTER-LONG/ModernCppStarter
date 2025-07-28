@@ -15,7 +15,7 @@ include(../cmake/tools.cmake)
 
 include(../cmake/CPM.cmake)
 
-CPMAddPackage("gh:doctest/doctest@2.4.9")
+CPMAddPackage("gh:doctest/doctest@2.4.12")
 CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
 
 if(TEST_INSTALLED_VERSION)
@@ -35,12 +35,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 if(NOT TEST_INSTALLED_VERSION)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(Greeter PUBLIC -Wall -Wpedantic -Wextra -Werror)
+    # Allow Microsoft extensions when using Clang on Windows
+    if(WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+      target_compile_options(Greeter PUBLIC -Wno-language-extension-token)
+    endif()
   elseif(MSVC)
     target_compile_options(Greeter PUBLIC /W4 /WX)
     target_compile_definitions(${PROJECT_NAME} PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
-
 # ---- Add GreeterTests ----
 
 enable_testing()
